@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lista de Curtidas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    input[type="text"] {
+      padding: 6px;
+      font-size: 1rem;
+      width: 250px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 6px 12px;
+      font-size: 1rem;
+      margin-right: 5px;
+    }
+    #resultado {
+      margin-top: 20px;
+      font-weight: bold;
+      font-size: 1.1rem;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Lista de Curtidas</h1>
+
+  <input type="text" id="nome" placeholder="Digite seu nome" />
+  <button id="btnCurtir">Curtir</button>
+  <button id="btnLimpar">Limpar</button>
+
+  <p id="resultado">Ninguém curtiu</p>
+
+  <script>
+    // Recupera os nomes salvos do localStorage ou inicia com array vazio
+    let nomes = JSON.parse(localStorage.getItem('curtidas')) || [];
+
+    // Elementos DOM
+    const inputNome = document.getElementById('nome');
+    const btnCurtir = document.getElementById('btnCurtir');
+    const btnLimpar = document.getElementById('btnLimpar');
+    const resultado = document.getElementById('resultado');
+
+    // Função para atualizar a mensagem exibida
+    function atualizarMensagem() {
+      const qtd = nomes.length;
+
+      if (qtd === 0) {
+        resultado.textContent = 'Ninguém curtiu';
+      } else if (qtd === 1) {
+        resultado.textContent = `${nomes[0]} curtiu`;
+      } else if (qtd === 2) {
+        resultado.textContent = `${nomes[0]} e ${nomes[1]} curtiram`;
+      } else {
+        resultado.textContent = `${nomes[0]}, ${nomes[1]} e mais ${qtd - 2} pessoas curtiram`;
+      }
+    }
+
+    // Função para salvar no localStorage
+    function salvarLocalStorage() {
+      localStorage.setItem('curtidas', JSON.stringify(nomes));
+    }
+
+    // Evento para curtir
+    btnCurtir.addEventListener('click', () => {
+      const nome = inputNome.value.trim();
+
+      if (nome === '') {
+        alert('Digite um nome válido!');
+        return;
+      }
+
+      if (!nomes.includes(nome)) {
+        nomes.push(nome);
+        salvarLocalStorage();
+        atualizarMensagem();
+      } else {
+        alert('Esse nome já curtiu.');
+      }
+
+      inputNome.value = '';
+      inputNome.focus();
+    });
+
+    // Evento para limpar a lista de curtidas
+    btnLimpar.addEventListener('click', () => {
+      if (confirm('Deseja realmente limpar todas as curtidas?')) {
+        nomes = [];
+        localStorage.removeItem('curtidas');
+        atualizarMensagem();
+      }
+    });
+
+    // Inicializa a mensagem ao carregar a página
+    atualizarMensagem();
+  </script>
+
+</body>
+</html>
