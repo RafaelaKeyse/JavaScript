@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Buscar Usuários do GitHub</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 30px;
+    }
+    input {
+      padding: 8px;
+      font-size: 1rem;
+      width: 250px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 8px 12px;
+      font-size: 1rem;
+    }
+    ul {
+      margin-top: 20px;
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      margin-bottom: 10px;
+    }
+    .usuario {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .usuario img {
+      width: 50px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Buscar Usuários do GitHub</h1>
+
+  <input type="text" id="busca" placeholder="Digite o nome do usuário..." />
+  <button id="btnBuscar">Buscar</button>
+
+  <ul id="listaUsuarios"></ul>
+  <p id="mensagem"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
