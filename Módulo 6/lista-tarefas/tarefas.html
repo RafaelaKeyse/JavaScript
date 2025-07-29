@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lista de Tarefas</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    input[type="text"] {
+      padding: 6px;
+      font-size: 1rem;
+      width: 300px;
+      margin-right: 10px;
+    }
+    button {
+      padding: 6px 12px;
+      font-size: 1rem;
+    }
+    ul {
+      list-style: none;
+      padding-left: 0;
+      margin-top: 20px;
+      max-width: 400px;
+    }
+    li {
+      display: flex;
+      align-items: center;
+      margin-bottom: 8px;
+    }
+    li label {
+      margin-left: 8px;
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.3s, text-decoration 0.3s;
+    }
+    /* Tarefas concluídas com risco e cor cinza */
+    li.concluida label {
+      text-decoration: line-through;
+      color: gray;
+      font-style: italic;
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Lista de Tarefas</h1>
+
+  <input type="text" id="descricao" placeholder="Nova tarefa..." />
+  <button id="btnAdicionar">Adicionar</button>
+
+  <ul id="listaTarefas"></ul>
+
+  <script>
+    // Array de tarefas
+    const tarefas = [];
+
+    // Elementos DOM
+    const inputDescricao = document.getElementById('descricao');
+    const btnAdicionar = document.getElementById('btnAdicionar');
+    const listaTarefas = document.getElementById('listaTarefas');
+
+    // Função para renderizar a lista de tarefas
+    function renderizar() {
+      listaTarefas.innerHTML = ''; // limpa lista
+
+      tarefas.forEach((tarefa, index) => {
+        const li = document.createElement('li');
+        li.className = tarefa.status ? 'concluida' : '';
+
+        const checkbox = document.createElement('input');
+        checkbox.type = 'checkbox';
+        checkbox.checked = tarefa.status;
+        checkbox.id = `tarefa-${index}`;
+
+        // Evento para alterar status da tarefa
+        checkbox.addEventListener('change', () => {
+          tarefa.status = checkbox.checked;
+          renderizar();
+        });
+
+        const label = document.createElement('label');
+        label.htmlFor = `tarefa-${index}`;
+        label.textContent = tarefa.descricao;
+
+        li.appendChild(checkbox);
+        li.appendChild(label);
+
+        listaTarefas.appendChild(li);
+      });
+    }
+
+    // Evento para adicionar tarefa nova
+    btnAdicionar.addEventListener('click', () => {
+      const desc = inputDescricao.value.trim();
+      if (desc === '') {
+        alert('Digite uma descrição válida!');
+        return;
+      }
+      tarefas.push({ descricao: desc, status: false });
+      inputDescricao.value = '';
+      inputDescricao.focus();
+      renderizar();
+    });
+
+    // Inicializa lista vazia
+    renderizar();
+  </script>
+
+</body>
+</html>
