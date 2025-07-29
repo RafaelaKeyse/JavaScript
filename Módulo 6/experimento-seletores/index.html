@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exemplo com Parágrafos Coloridos</title>
+  <style>
+    .paragrafo1 {
+      color: blue;
+    }
+
+    .paragrafo2 {
+      color: green;
+    }
+
+    #titulo {
+  color: blue;
+}
+
+
+  </style>
+</head>
+<body>
+  <h1 id="titulo">Título Original</h1>
+  <ul>
+    <li>Item 1</li>
+    <li>Item 2</li>
+    <li>Item 3</li>
+  </ul>
+
+  <p class="paragrafo1">Este é o primeiro parágrafo.</p>
+  <p class="paragrafo2">Este é o segundo parágrafo.</p>
+
+  <button id="botao">Clique aqui</button>
+
+  <script>
+    // Mudar o texto do título
+    document.getElementById('titulo').textContent = 'Novo Título';
+
+    // Alterar o estilo dos itens da lista
+    const itens = document.querySelectorAll('ul li');
+    itens.forEach(item => {
+      item.style.color = 'purple';
+      item.style.fontWeight = 'bold';
+    });
+
+    // Alterar o texto do botão
+    document.getElementById('botao').textContent = 'Texto Alterado';
+  </script>
+</body>
+</html>
